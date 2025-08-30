@@ -54,4 +54,3 @@ A terminal-based TUI for selecting and cloning multiple Azure DevOps repositorie
 ## License
 
 See [LICENSE](LICENSE) for details.
-# QuickCloner
