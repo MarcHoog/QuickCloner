@@ -217,9 +217,7 @@ class AzDoCloneApp(App):
 
             row_index = self.table.get_row_index(row_key)
 
-            print(f" Row index: {row_index}")
             await self.select_row(row_index, row_key)
-
 
         except Exception as e:
             print(f"Selection error: {e}")
