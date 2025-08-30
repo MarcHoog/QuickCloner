@@ -29,7 +29,6 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.message import Message
-from textual.reactive import reactive
 from textual.widgets import (
     Button,
     DataTable,
