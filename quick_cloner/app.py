@@ -20,7 +20,6 @@ Key controls:
 
 import anyio
 import sys
-from typing import Optional
 import httpx
 from pathlib import Path
 from typing import List, Tuple, Any
@@ -43,68 +42,9 @@ from .azdo import AzDoClient
 from .clone import CloneWorker
 from .utils import mask_pat
 from .models import Repo
+from .log import _LogStream
+from textual.events import Key
 
-
-class _LogStream:
-    """A lightweight stream that forwards print output to the app's Log widget.
-
-    - Buffers partial writes until a newline, then emits a line to the Log.
-    - Optionally masks a secret (PAT) using a provided mask function.
-    - Optionally tees output to the original stream (so console still shows text).
-    """
-
-    def __init__(self, app: "AzDoCloneApp", mask_fn=None, secret: Optional[str] = None, tee=None) -> None:
-        self.app = app
-        self.mask_fn = mask_fn
-        self.secret = secret
-        self.tee = tee
-        self._buffer: str = ""
-
-    def write(self, data: str) -> int:
-        # Tee to original stream first, so behavior remains familiar
-        try:
-            if self.tee is not None:
-                self.tee.write(data)
-        except Exception:
-            pass
-
-        if not isinstance(data, str):
-            data = str(data)
-        self._buffer += data
-        while "\n" in self._buffer:
-            line, self._buffer = self._buffer.split("\n", 1)
-            # Skip emitting empty lines to avoid extra blank entries
-            if line != "":
-                self._emit(line)
-        return len(data)
-
-    def flush(self) -> None:
-        try:
-            if self.tee is not None and hasattr(self.tee, "flush"):
-                self.tee.flush()
-        except Exception:
-            pass
-        if self._buffer:
-            self._emit(self._buffer)
-            self._buffer = ""
-
-    def _emit(self, line: str) -> None:
-        try:
-            if self.secret and self.mask_fn:
-                line = self.mask_fn(line, self.secret)
-            self.app._log_line(line)
-        except Exception:
-            # Never crash due to logging
-            pass
-
-    def isatty(self) -> bool:  # pragma: no cover - compatibility shim
-        return False
-
-    def fileno(self):  # pragma: no cover - compatibility shim
-        try:
-            return self.tee.fileno() if self.tee is not None else -1
-        except Exception:
-            return -1
 
 class AzDoCloneApp(App):
     """Main Textual app for browsing and cloning repos."""
@@ -292,6 +232,9 @@ class AzDoCloneApp(App):
         elif event.button.id == "select_all":
             await self.action_select_all()
 
+    def on_key(self, event: Key) -> None:
+        if self.filter_input.has_focus and event.key == "enter":
+            self.table.focus()
 
     async def action_clone_selected(self) -> None:
         if not self.selected_rows:
