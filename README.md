@@ -1,7 +1,6 @@
-QuickCloner/README.md
 # QuickCloner
 
-![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Textual UI](https://img.shields.io/badge/UI-Textual-informational.svg)
 ![Azure DevOps](https://img.shields.io/badge/Azure%20DevOps-Repo%20Cloner-purple.svg)
@@ -19,7 +18,7 @@ A terminal-based TUI for selecting and cloning multiple Azure DevOps repositorie
 
 1. Clone this repository:
     ```
-    git clone https://github.com/yourusername/QuickCloner.git
+    git clone https://github.com/MarcHoog/QuickCloner.git
     cd QuickCloner
     ```
 
