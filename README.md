@@ -50,6 +50,10 @@ A terminal-based TUI for selecting and cloning multiple Azure DevOps repositorie
    - `--concurrency`: Max concurrent clones (default: 4)
    - `--pat-username`: Username for embedding PAT (default: azdo)
 
+## TODO
+
+See [TODO](TODO.MD) for things that still need to be intergrated
+
 ## License
 
 See [LICENSE](LICENSE) for details.
