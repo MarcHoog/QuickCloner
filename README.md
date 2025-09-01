@@ -52,7 +52,7 @@ A terminal-based TUI for selecting and cloning multiple Azure DevOps repositorie
 
 ## TODO
 
-See [TODO](TODO.MD) for things that still need to be intergrated
+See [TODO](TODO.md) for things that still need to be intergrated
 
 ## License
 
